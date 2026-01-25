@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Kamu 🤍</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  background: radial-gradient(circle at top, #2b1055, #000);
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+}
+
+/* stars */
+.star{
+  position:absolute;
+  background:white;
+  border-radius:50%;
+  opacity:0.8;
+  animation: twinkle infinite alternate;
+}
+@keyframes twinkle{
+  from{opacity:0.3}
+  to{opacity:1}
+}
+
+/* card */
+.card{
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(15px);
+  padding:30px;
+  border-radius:25px;
+  width:90%;
+  max-width:420px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+  animation:pop 1s ease;
+  z-index:2;
+}
+@keyframes pop{
+  from{transform:scale(0.8);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+h1{font-size:22px;margin-bottom:10px;}
+p{font-size:15px;line-height:1.7;min-height:120px;}
+
+/* bear */
+.bear{
+  font-size:70px;
+  animation:bounce 2s infinite;
+  margin-bottom:10px;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+button{
+  margin-top:20px;
+  background:#fff;
+  color:#ff4f7a;
+  border:none;
+  padding:12px 28px;
+  border-radius:30px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+}
+button:hover{transform:scale(1.1);}
+
+.love{
+  margin-top:15px;
+  display:none;
+  animation:fade 1s ease;
+}
+@keyframes fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+/* hearts */
+.heart{
+  position:absolute;
+  font-size:20px;
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(100vh) scale(0.5);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-10vh) scale(1.2);opacity:0}
+}
+
+/* surprise page */
+#surprise{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+  z-index:10;
+  color:white;
+}
+#countdown{
+  margin-top:15px;
+  font-size:14px;
+  opacity:0.9;
+}
+
+/* watermark */
+.watermark{
+  position:fixed;
+  bottom:10px;
+  width:100%;
+  text-align:center;
+  font-size:12px;
+  color:rgba(255,255,255,0.6);
+  letter-spacing:1px;
+  z-index:20;
+  pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <div class="bear">🧸</div>
+  <h1>Hai Kamu 🤍</h1>
+  <p id="text"></p>
+
+  <button onclick="maafin()">Aku Maafin Kamu 🤍</button>
+
+  <div class="love" id="love">
+    Makasih ya… aku seneng banget 😭💗
+  </div>
+</div>
+
+<div id="surprise">
+  <h2>Terima Kasih 🤍</h2>
+  <p>
+    Aku bener-bener bersyukur kamu masih mau maafin aku.
+    Kamu berarti banget buat aku 🌸
+  </p>
+  <div id="countdown">Menghubungi kamu dalam 10 detik…</div>
+</div>
+
+<div class="watermark">© Putxz Tamvan</div>
+
+<audio id="music" loop>
+  <source src="https://files.catbox.moe/4x6g0c.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// stars
+for(let i=0;i<60;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.style.width=s.style.height=Math.random()*3+1+"px";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  s.style.animationDuration=Math.random()*3+2+"s";
+  document.body.appendChild(s);
+}
+
+// typing text
+const msg=`Aku tau aku salah.
+Aku tau aku bikin kamu kesel.
+Dan aku minta maaf dengan sepenuh hati.
+
+Aku nggak mau kehilangan kamu.
+Aku masih pengen sama kamu 🤍`;
+let i=0;
+function type(){
+  if(i<msg.length){
+    document.getElementById("text").innerHTML+=msg.charAt(i);
+    i++;
+    setTimeout(type,40);
+  }
+}
+type();
+
+function maafin(){
+  document.getElementById("love").style.display="block";
+  document.getElementById("music").play();
+  hearts();
+
+  setTimeout(()=>{
+    document.getElementById("card").style.display="none";
+    document.getElementById("surprise").style.display="flex";
+    startCountdown();
+  },4000);
+}
+
+// countdown + redirect WA
+function startCountdown(){
+  let time = 10;
+  const cd = document.getElementById("countdown");
+  const interval = setInterval(()=>{
+    time--;
+    cd.innerText = "Tunggu Ya Sayang " + time + " detik…";
+    if(time <= 0){
+      clearInterval(interval);
+      window.location.href =
+        "https://wa.me/6283894033664?text=" +
+        encodeURIComponent("iya sayang aku maafin kamu, makasih ya");
+    }
+  },1000);
+}
+
+// hearts
+function hearts(){
+  for(let i=0;i<30;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(4+Math.random()*3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+  }
+}
+</script>
+
+</body>
+</html>
