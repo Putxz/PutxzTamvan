@@ -1,507 +1,177 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maafin Aku Ya Sayang</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            transition: background 0.5s ease;
-            overflow: hidden;
-        }
-        
-        .container {
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
-        }
-        
-        /* Screen 1: Permintaan Maaf */
-        .apology-screen {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 25px;
-            padding: 40px 30px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, opacity 0.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .apology-screen h1 {
-            color: #ff6b8b;
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .apology-screen p {
-            color: #666;
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-        
-        .hearts {
-            font-size: 2.5rem;
-            color: #ff6b8b;
-            margin-bottom: 30px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 0.7; }
-            50% { opacity: 1; }
-            100% { opacity: 0.7; }
-        }
-        
-        .buttons-container {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            margin-top: 30px;
-            border-radius: 15px;
-            background-color: rgba(255, 255, 255, 0.5);
-            overflow: hidden;
-        }
-        
-        .buttons-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .forgive-btn {
-            background: linear-gradient(to right, #4CAF50, #45a049);
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            font-size: 1.8rem;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 8px 15px rgba(76, 175, 80, 0.3);
-            transition: all 0.3s ease;
-            font-weight: bold;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 5;
-            min-width: 250px;
-        }
-        
-        .forgive-btn:hover {
-            transform: translate(-50%, -50%) scale(1.05);
-            box-shadow: 0 12px 20px rgba(76, 175, 80, 0.4);
-        }
-        
-        .forgive-btn:active {
-            transform: translate(-50%, -50%) scale(0.98);
-        }
-        
-        .refuse-btn {
-            background: linear-gradient(to right, #ff416c, #ff4b2b);
-            color: white;
-            border: none;
-            padding: 18px 35px;
-            font-size: 1.7rem;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 8px 15px rgba(255, 65, 108, 0.3);
-            transition: all 0.1s ease;
-            font-weight: bold;
-            position: absolute;
-            z-index: 4;
-        }
-        
-        .counter {
-            margin-top: 30px;
-            font-size: 1.2rem;
-            color: #666;
-            font-weight: bold;
-        }
-        
-        .counter span {
-            color: #ff6b8b;
-            font-size: 1.5rem;
-        }
-        
-        /* Screen 2: Terima Kasih */
-        .thankyou-screen {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 25px;
-            padding: 60px 40px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-            display: none;
-        }
-        
-        .thankyou-screen h1 {
-            color: #4CAF50;
-            font-size: 3rem;
-            margin-bottom: 30px;
-        }
-        
-        .thankyou-screen p {
-            color: #666;
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            line-height: 1.8;
-        }
-        
-        .heart-container {
-            font-size: 4rem;
-            color: #ff6b8b;
-            margin: 30px 0;
-            animation: float 3s infinite ease-in-out;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .thankyou-message {
-            background-color: #f9f9f9;
-            border-radius: 20px;
-            padding: 30px;
-            margin: 30px 0;
-            border-left: 6px solid #4CAF50;
-        }
-        
-        .thankyou-message p {
-            font-size: 1.4rem;
-            color: #555;
-            font-style: italic;
-        }
-        
-        .back-btn {
-            background: linear-gradient(to right, #ff6b8b, #ff8e53);
-            color: white;
-            border: none;
-            padding: 18px 40px;
-            font-size: 1.5rem;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 8px 15px rgba(255, 107, 139, 0.3);
-            transition: all 0.3s ease;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        
-        .back-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(255, 107, 139, 0.4);
-        }
-        
-        .movement-counter {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(255, 107, 139, 0.9);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            z-index: 10;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .apology-screen h1, .thankyou-screen h1 {
-                font-size: 2.2rem;
-            }
-            
-            .forgive-btn, .refuse-btn {
-                font-size: 1.4rem;
-                padding: 16px 30px;
-                min-width: 200px;
-            }
-            
-            .buttons-container {
-                height: 250px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .apology-screen, .thankyou-screen {
-                padding: 30px 20px;
-            }
-            
-            .apology-screen h1, .thankyou-screen h1 {
-                font-size: 1.8rem;
-            }
-            
-            .forgive-btn, .refuse-btn {
-                font-size: 1.2rem;
-                padding: 14px 25px;
-                min-width: 180px;
-            }
-            
-            .buttons-container {
-                height: 220px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Someone Special ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #ff6f91, #1e1e2f);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: 1s ease;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9);
+}
+
+h1 {
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    font-weight: 300;
+    text-align: center;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 12px;
+    border-radius: 30px;
+    border: none;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 250px;
+}
+
+button {
+    padding: 12px 25px;
+    border-radius: 50px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin: 5px;
+}
+
+.yes {
+    background: linear-gradient(45deg, #ff4e88, #ff1e56);
+    color: white;
+    box-shadow: 0 0 20px rgba(255,0,100,0.7);
+}
+
+.no {
+    background: white;
+    color: #ff4e88;
+    position: absolute;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- Screen 1: Permintaan Maaf -->
-        <div class="apology-screen" id="apologyScreen">
-            <div class="movement-counter" id="movementCounter">
-                Pindah: <span id="moveCount">0</span> kali
-            </div>
-            
-            <div class="hearts">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-heart"></i>
-            </div>
-            
-            <h1>Maafin Aku Ya Sayang, Heheheheh</h1>
-            
-            <p>Aku salah, aku egois banget, maaf ya.<br>
-            Aku bakal berusaha jadi yang lebih baik buat kamu. Tolong maafin aku, ya?</p>
-            
-            <div class="buttons-container">
-                <div class="buttons-wrapper">
-                    <button class="forgive-btn" id="forgiveBtn">
-                        <i class="fas fa-heart"></i> Iya Aku Maafin <i class="fas fa-heart"></i>
-                    </button>
-                    <button class="refuse-btn" id="refuseBtn">
-                        <i class="fas fa-times"></i> Gamau <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="counter">
-                Tombol "Iya Aku Maafin" telah membesar <span id="sizeCounter">0</span> kali
-            </div>
-        </div>
-        
-        <!-- Screen 2: Terima Kasih -->
-        <div class="thankyou-screen" id="thankyouScreen">
-            <div class="heart-container">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-heart"></i>
-            </div>
-            
-            <h1>Hehehehe, Makasih Sayang!</h1>
-            
-            <p>Kamu emang orang paling baik yang pernah aku temuin.</p>
-            
-            <div class="thankyou-message">
-                <p>"Makasih sayang udah mau maafin aku. Aku bersyukur banget bisa punya kamu di hidup aku. 
-                Aku bakal berusaha buat jadi yang lebih baik buat kamu.
-                Aku sayang banget sama kamu! ❤️"</p>
-            </div>
-            
-            <p>Dari aku yang selalu sayang kamu,<br>
-            <strong>Selamanya dan selalu.</strong></p>
-            
-            <button class="back-btn" id="backBtn">
-                <i class="fas fa-redo"></i> Kembali ke Halaman Utama
-            </button>
-        </div>
-    </div>
 
-    <script>
-        // Elemen DOM
-        const apologyScreen = document.getElementById('apologyScreen');
-        const thankyouScreen = document.getElementById('thankyouScreen');
-        const forgiveBtn = document.getElementById('forgiveBtn');
-        const refuseBtn = document.getElementById('refuseBtn');
-        const backBtn = document.getElementById('backBtn');
-        const sizeCounter = document.getElementById('sizeCounter');
-        const moveCount = document.getElementById('moveCount');
-        const movementCounter = document.getElementById('movementCounter');
-        
-        // Variabel untuk menghitung berapa kali tombol "Gamau" diklik
-        let refuseCount = 0;
-        let moveCounter = 0;
-        let forgiveBtnSize = 1;
-        
-        // Dapatkan ukuran container dan tombol
-        const container = document.querySelector('.buttons-container');
-        const containerRect = container.getBoundingClientRect();
-        
-        // Ukuran tombol "Iya Aku Maafin" (tetap di tengah)
-        const forgiveBtnRect = forgiveBtn.getBoundingClientRect();
-        const forgiveBtnWidth = forgiveBtnRect.width;
-        const forgiveBtnHeight = forgiveBtnRect.height;
-        
-        // Hitung area aman di sekitar tombol "Iya Aku Maafin"
-        const safeZonePadding = 30; // Jarak minimal antara tombol
-        
-        // Fungsi untuk menghasilkan posisi acak yang TIDAK menimpa tombol "Iya Aku Maafin"
-        function getSafeRandomPosition() {
-            const refuseBtnRect = refuseBtn.getBoundingClientRect();
-            const refuseBtnWidth = refuseBtnRect.width;
-            const refuseBtnHeight = refuseBtnRect.height;
-            
-            // Posisi tengah tombol "Iya Aku Maafin"
-            const forgiveCenterX = containerRect.width / 2;
-            const forgiveCenterY = containerRect.height / 2;
-            
-            // Area yang dilarang (di sekitar tombol "Iya Aku Maafin")
-            const forbiddenZone = {
-                left: forgiveCenterX - (forgiveBtnWidth / 2) - refuseBtnWidth - safeZonePadding,
-                right: forgiveCenterX + (forgiveBtnWidth / 2) + safeZonePadding,
-                top: forgiveCenterY - (forgiveBtnHeight / 2) - refuseBtnHeight - safeZonePadding,
-                bottom: forgiveCenterY + (forgiveBtnHeight / 2) + safeZonePadding
-            };
-            
-            let randomX, randomY;
-            let attempts = 0;
-            const maxAttempts = 100;
-            
-            // Cari posisi acak yang tidak berada di zona terlarang
-            do {
-                randomX = Math.floor(Math.random() * (containerRect.width - refuseBtnWidth - 20)) + 10;
-                randomY = Math.floor(Math.random() * (containerRect.height - refuseBtnHeight - 20)) + 10;
-                attempts++;
-                
-                // Cek apakah posisi acak berada di zona terlarang
-                const isInForbiddenZone = 
-                    randomX + refuseBtnWidth > forbiddenZone.left && 
-                    randomX < forbiddenZone.right && 
-                    randomY + refuseBtnHeight > forbiddenZone.top && 
-                    randomY < forbiddenZone.bottom;
-                
-                // Jika tidak di zona terlarang atau sudah terlalu banyak percobaan, keluar dari loop
-                if (!isInForbiddenZone || attempts >= maxAttempts) {
-                    break;
-                }
-                
-            } while (true);
-            
-            // Jika setelah maxAttempts masih di zona terlarang, taruh di pojok
-            if (attempts >= maxAttempts) {
-                // Posisi aman di pojok kiri atas atau kanan bawah
-                if (Math.random() > 0.5) {
-                    randomX = 10;
-                    randomY = 10;
-                } else {
-                    randomX = containerRect.width - refuseBtnWidth - 10;
-                    randomY = containerRect.height - refuseBtnHeight - 10;
-                }
-            }
-            
-            return { x: randomX, y: randomY };
-        }
-        
-        // Fungsi untuk memindahkan tombol "Gamau" ke posisi acak yang aman
-        function moveRefuseBtn() {
-            const safePosition = getSafeRandomPosition();
-            
-            // Terapkan posisi acak yang aman
-            refuseBtn.style.left = `${safePosition.x}px`;
-            refuseBtn.style.top = `${safePosition.y}px`;
-            
-            // Tambah counter pergerakan
-            moveCounter++;
-            moveCount.textContent = moveCounter;
-            
-            // Efek visual pada counter
-            movementCounter.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                movementCounter.style.transform = 'scale(1)';
-            }, 150);
-        }
-        
-        // Fungsi untuk memperbesar tombol "Iya Aku Maafin"
-        function enlargeForgiveBtn() {
-            forgiveBtnSize += 0.1;
-            forgiveBtn.style.transform = `translate(-50%, -50%) scale(${forgiveBtnSize})`;
-            
-            // Perbarui counter
-            refuseCount++;
-            sizeCounter.textContent = refuseCount;
-            
-            // Tambah efek visual pada body
-            document.body.style.background = `linear-gradient(135deg, #${Math.floor(Math.random()*16777215).toString(16)}, #${Math.floor(Math.random()*16777215).toString(16)})`;
-        }
-        
-        // Fungsi untuk beralih ke layar terima kasih
-        function showThankYouScreen() {
-            apologyScreen.style.display = 'none';
-            thankyouScreen.style.display = 'block';
-            
-            // Reset ukuran tombol untuk lain waktu
-            forgiveBtnSize = 1;
-            forgiveBtn.style.transform = 'translate(-50%, -50%) scale(1)';
-            refuseCount = 0;
-            moveCounter = 0;
-            sizeCounter.textContent = '0';
-            moveCount.textContent = '0';
-            
-            // Reset posisi tombol "Gamau"
-            refuseBtn.style.left = '';
-            refuseBtn.style.top = '';
-            
-            // Reset background
-            document.body.style.background = 'linear-gradient(135deg, #ffafbd, #ffc3a0)';
-        }
-        
-        // Fungsi untuk kembali ke layar permintaan maaf
-        function showApologyScreen() {
-            thankyouScreen.style.display = 'none';
-            apologyScreen.style.display = 'block';
-            
-            // Set ulang posisi awal tombol "Gamau"
-            setTimeout(() => {
-                moveRefuseBtn();
-            }, 100);
-        }
-        
-        // Event Listeners
-        refuseBtn.addEventListener('mouseover', moveRefuseBtn);
-        refuseBtn.addEventListener('click', function() {
-            moveRefuseBtn();
-            enlargeForgiveBtn();
-            
-            // Tambah efek getar pada tombol yang diklik
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 100);
-        });
-        
-        forgiveBtn.addEventListener('click', showThankYouScreen);
-        backBtn.addEventListener('click', showApologyScreen);
-        
-        // Pindahkan tombol "Gamau" secara acak saat halaman dimuat
-        window.addEventListener('load', function() {
-            // Atur posisi tombol "Gamau" sebagai absolute
-            refuseBtn.style.position = 'absolute';
-            
-            // Pindahkan ke posisi acak pertama yang aman
-            setTimeout(() => {
-                moveRefuseBtn();
-            }, 100);
-        });
-        
-        // Juga pindahkan saat ukuran jendela berubah
-        window.addEventListener('resize', function() {
-            setTimeout(() => {
-                moveRefuseBtn();
-            }, 100);
-        });
-    </script>
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="https://files.catbox.moe/7m5qf3.mp3" type="audio/mpeg">
+</audio>
+
+<!-- SCREEN 1 -->
+<div class="screen" id="intro">
+    <h1>Hai Kamu ❤️</h1>
+    <p>Sebelum lanjut... siapa nama kamu? 😌</p>
+    <input type="text" id="nameInput" placeholder="Tulis nama kamu...">
+    <button onclick="start()">Masuk 💌</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="screen hidden" id="main">
+    <h1 id="valentineText"></h1>
+    <p id="message"></p>
+
+    <div style="position:relative; height:100px;">
+        <button class="yes" onclick="accept()">YES 💖</button>
+        <button class="no" id="noBtn">NO 😭</button>
+    </div>
+</div>
+
+<!-- SCREEN 3 -->
+<div class="screen hidden" id="final">
+    <h1>YAYYYYY ❤️😭</h1>
+    <p>Kamu resmi jadi orang paling spesial hari ini ✨</p>
+</div>
+
+<script>
+function start() {
+    const name = document.getElementById("nameInput").value || "Kamu";
+    document.getElementById("valentineText").innerHTML = 
+        "Happy Valentine, " + name + " 💖";
+    document.getElementById("message").innerHTML =
+        "Sejak ada kamu, hidup jadi full color 4K HDR 😭✨<br><br>Will you be mine?";
+    
+    document.getElementById("intro").classList.add("hidden");
+    document.getElementById("main").classList.remove("hidden");
+
+    document.getElementById("bgMusic").play();
+}
+
+function accept() {
+    document.getElementById("main").classList.add("hidden");
+    document.getElementById("final").classList.remove("hidden");
+    setInterval(createHeart, 200);
+}
+
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 30 + 15) + "px";
+    heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+}
+
+/* TOMBOL NO KABUR */
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseover", () => {
+    noBtn.style.top = Math.random() * 80 + "vh";
+    noBtn.style.left = Math.random() * 80 + "vw";
+});
+</script>
+
 </body>
 </html>
